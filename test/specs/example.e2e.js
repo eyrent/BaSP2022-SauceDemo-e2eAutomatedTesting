@@ -1,14 +1,12 @@
 import LoginPage from  '../pageobjects/login.page';
-import SecurePage from '../pageobjects/secure.page';
+import InventoryPage from '../pageobjects/inventory.page';
 
-describe('My Login application', () => {
+describe('Login page', () => {
     it('should login with valid credentials', async () => {
         await LoginPage.open();
-
-        await LoginPage.login('tomsmith', 'SuperSecretPassword!');
-        await expect(SecurePage.flashAlert).toBeExisting();
-        await expect(SecurePage.flashAlert).toHaveTextContaining(
-            'You logged into a secure area!');
+        await LoginPage.login('standard_user', 'secret_sauce');
+        await expect(InventoryPage.LogoutLink).toBeExisting();
+        await expect(InventoryPage.LogoutLink).toHaveElementProperty('innerText','Logout');
     });
 });
 
