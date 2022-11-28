@@ -7,10 +7,10 @@ exports.config = {
     capabilities: [{
         browserName: 'chrome',
         acceptInsecureCerts: true
-    }, {
+    }, /*{
         browserName: 'firefox',
         acceptInsecureCerts: true
-    }],
+    }*/],
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'warn',
     bail: 0,
