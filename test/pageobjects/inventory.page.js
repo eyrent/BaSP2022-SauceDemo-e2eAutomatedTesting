@@ -29,6 +29,15 @@ class InventoryPage extends Page {
     get sortDropdown(){
         return $('.product_sort_container');
     }
+    get twitterLink(){
+        return $('footer .social .social_twitter a');
+    }
+    get facebookLink(){
+        return $('footer .social .social_facebook a');
+    }
+    get linkedinLink(){
+        return $('footer .social .social_linkedin a');
+    }
 
     SortAscending(){
         return this.sortDropdown.selectByAttribute('value', 'az');
