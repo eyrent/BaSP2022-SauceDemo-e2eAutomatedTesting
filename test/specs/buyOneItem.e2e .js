@@ -20,6 +20,8 @@ describe('One item purchase', () => {
     it('should login with valid credentials', async () => {
         await LoginPage.open();
         await LoginPage.login(loginData.user, loginData.pass);
+        expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html');
+
     });
 
     it('should add an item to the cart', async () => {
@@ -30,15 +32,18 @@ describe('One item purchase', () => {
 
     it('should confirm purchased items', async () => {
         await InventoryPage.ShoppingCartLink.click();
+        expect(browser).toHaveUrl('https://www.saucedemo.com/cart.html');
         expect((await CartPage.items).length).toEqual(1);
         expect(await CartPage.getItemNameByOrder(1)).toEqual(itemName);
         await CartPage.checkoutBtn.click();
+        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html');
     });
 
     it('should show error message with \'name\' is left empty', async () => {
         await CheckoutPage.formLastName.setValue(clientData.lastName);
         await CheckoutPage.formZipCode.setValue(clientData.firstName);
         await CheckoutPage.continueButton.click();
+        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html'); 
         expect(await CheckoutPage.getErrorMessage()).toMatch(/first name/i);
 
     });
@@ -50,6 +55,7 @@ describe('One item purchase', () => {
         await CheckoutPage.formZipCode.setValue(clientData.lastName);
         await CheckoutPage.formZipCode.setValue([' ', 'Backspace'], { translateToUnicode: true });
         await CheckoutPage.continueButton.click();
+        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html');
         expect(await CheckoutPage.getErrorMessage()).toMatch(/last name/i);
     });
 
@@ -60,6 +66,7 @@ describe('One item purchase', () => {
         await CheckoutPage.formLastName.setValue(clientData.lastName);
         await CheckoutPage.formZipCode.setValue([' ', 'Backspace'], { translateToUnicode: true });
         await CheckoutPage.continueButton.click();
+        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-one.html');
         expect(await CheckoutPage.getErrorMessage()).toMatch(/code/i);
     });
 
@@ -74,6 +81,10 @@ describe('One item purchase', () => {
     });
     
     it('confirm purchase', async () => {
+        expect(browser).toHaveUrl('https://www.saucedemo.com/checkout-step-two.html');
+        console.log(await CheckoutPage.TaxCostValue);
+        expect(CheckoutPage.TaxCostValue).toBeDisplayed();
+        expect(CheckoutPage.TotalCostValue).toBeDisplayed();
         await CheckoutPage.finishButton.click();
         expect(await CheckoutPage.secondaryHeader.getProperty('innerText')).toMatch(/complete/i);
         await expect(CheckoutPage.ShoppingCartCounter).not.toExist();

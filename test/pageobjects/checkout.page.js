@@ -37,6 +37,15 @@ class CheckoutPage extends Page {
     get ShoppingCartCounter(){
         return $('.primary_header .shopping_cart_container span[class*="badge"]');
     }
+    get Summary(){
+        return $('#checkout_summary_container');
+    }
+    get TaxCostValue(){
+        return $('#checkout_summary_container .summary_tax_label');
+    }
+    get TotalCostValue(){
+        return $('#checkout_summary_container .summary_total_label');
+    }
     getErrorMessage(){
         return this.errorMessageContainer.getProperty('innerText');
     }
